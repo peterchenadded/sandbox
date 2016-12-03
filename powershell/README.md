@@ -2,22 +2,22 @@
 $PSVersionTable
 
 ## Get help
+`
 help get-service
-
 help *log*
-
 help *event*
-
 Get-EventLog Application -computer (Get-Content names.txt)
-
 help get-eventlog -examples
+`
 
 ## search for command
+`
 get-comment *count*
 get-help command-name
 "string" | get-member
 "string" | measure-object
 get-history
+`
 
 ## escape sequences
 `n
