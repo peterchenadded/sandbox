@@ -21,6 +21,7 @@ Some commands are also atomic which means there are no race conditions when acti
     DEL name
     EXPIRE first 10
     TTL first
+    FLUSHALL
     
     # Increment/Decrement Commands
     SET counter 100
