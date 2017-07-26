@@ -3,6 +3,13 @@
 * <https://css-tricks.com/snippets/css/complete-guide-grid/>
 * <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout>
 * <http://htmlshell.com/>
+* <https://gridbyexample.com>
+
+# Notes
+
+Only the latest browsers support this pretty cool feature
+
+It's a general framework to define a grid and assign elements to particular cells in the grid. This idea is very powerful as not clear hacks and can be used with device media queries. It also introduces the new 1fr unit which is 1 fraction.
 
 # Key terms
 
