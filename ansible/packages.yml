@@ -1,0 +1,8 @@
+---
+- hosts: example
+  sudo: yes
+  tasks:
+  - name: Ensure vagrant is installed
+    package: name=vagrant state=present
+  - name: Ensure virtualbox is installed
+    package: name=virtualbox state=present

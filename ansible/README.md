@@ -40,5 +40,20 @@ mkdir vagrant
 vagrant box add geerlingguy/centos7
 vagrant init geerlingguy/centos7
 vagrant up
+vagrant halt
+vagrant destory
+vagrant ssh-config
+```
+
+# Running a playbook
+
+```
+ansible-playbook playbook.yml
+
+# Ask for password
+ansible-playbook playbook.yml --ask-become-pass
+
+# Run in parallel
+ansible-playbook playbook.yml -f 10
 ```
 
