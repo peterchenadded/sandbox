@@ -31,6 +31,10 @@ ansible example -a "free -m"
 ```
 sudo apt-get install vagrant
 sudo apt-get install virtualbox
+
+vagrant version
+vboxmanage -version
+
 ```
 
 # Setting up a CentOS vm
@@ -49,11 +53,28 @@ vagrant ssh-config
 
 ```
 ansible-playbook playbook.yml
-
 # Ask for password
 ansible-playbook playbook.yml --ask-become-pass
-
 # Run in parallel
 ansible-playbook playbook.yml -f 10
+```
+
+# Use vagrant provisioning with ansible
+
+```
+# Add below to Vagrantfile
+config.vm.provision "ansible" do |ansible|
+  ansible.playbook = "playbook.yml"
+end
+```
+
+```
+# Sample playbook.yml
+---
+- hosts: all
+  sudo: yes
+  tasks:
+  - yum: name=ntp state=present
+  - service: name=ntpd state=started enabled=yes
 ```
 

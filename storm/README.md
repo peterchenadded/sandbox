@@ -25,3 +25,7 @@
 
 Shuffle grouping - type of stream grouping where tuples are emitted to instances of bolts at random
 Fields grouping - ensures that tuples with the same value for a particular field name are always emitted to the same instance of a bolt
+
+# Chapter 3
+
+1. 
