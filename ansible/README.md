@@ -47,6 +47,17 @@ vagrant up
 vagrant halt
 vagrant destory
 vagrant ssh-config
+
+# For networking to work
+Ensure the network "Cable connected" setting is enabled by going to "Settings" in virtualbox for the vm or add in following after the config.vm.box line
+
+  # Bugfix for "Cable connected: off"
+  config.vm.provider :virtualbox do |vm|
+    vm.customize [
+      "modifyvm", :id,
+      "--cableconnected1", "on",
+    ]
+  end
 ```
 
 # Running a playbook
@@ -78,3 +89,7 @@ end
   - service: name=ntpd state=started enabled=yes
 ```
 
+```
+# Run playbook.yml
+vagrant provision
+```

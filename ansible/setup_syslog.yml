@@ -1,0 +1,19 @@
+---
+- hosts: ubuntu_slave
+  become: yes
+  tasks:
+  - name: Stop rsyslog
+    systemd: name=rsyslog enabled=no state=stopped
+
+  #- name: Start rsyslog
+  #  systemd: name=rsyslog enabled=yes state=started
+
+  #- name: Try to stop it using shell command
+  #  become: yes
+  #  shell: service syslog stop
+  #  register: output
+  #- debug: msg="{{output.stdout}}"
+  #- debug: msg="{{output.stderr}}"
+    
+
+

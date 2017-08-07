@@ -1,2 +1,5 @@
 [example]
 localhost
+
+[ubuntu_slave]
+192.168.66.130 ansible_sudo_pass=letmein!
