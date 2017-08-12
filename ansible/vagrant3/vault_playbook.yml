@@ -1,0 +1,11 @@
+---
+- hosts: all
+  vars_files:
+    - api_key.yml
+
+  tasks:
+    - name: Get hostname
+      command: hostname
+    
+    - debug: msg={{api_key}}
+

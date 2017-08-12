@@ -93,3 +93,11 @@ end
 # Run playbook.yml
 vagrant provision
 ```
+
+# Module help
+
+```
+ansible-doc command
+ansible-doc debug
+ansible-doc shell
+```
