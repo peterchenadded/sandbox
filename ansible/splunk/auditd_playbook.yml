@@ -1,0 +1,20 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  tasks:
+    - name: Install auditd packages
+      apt: name={{item}}
+      with_items:
+        - auditd
+
+    - name: List rules
+      command: auditctl -l
+      check_mode: no
+      register: auditctl_output
+
+    - debug: msg={{auditctl_output.stdout}}
+
+    - name: Monitor directory
+      command: auditctl -w /home/osboxes/sandbox/ansible/splunk -p war -k test_watch
