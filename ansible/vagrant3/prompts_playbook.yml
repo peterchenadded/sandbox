@@ -1,0 +1,14 @@
+---
+- hosts: all
+  vars_prompt:
+    - name: share_user
+      prompt: "What is your network username?"
+    
+    - name: share_pass
+      prompt: "What is your network password?"
+      private: yes
+
+  tasks:
+    - debug: var=share_user
+
+    - debug: var=share_pass

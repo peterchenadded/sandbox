@@ -1,0 +1,38 @@
+# vim: ts=2 expandtab
+
+---
+- hosts: 127.0.0.1
+  become: yes
+  connection: local
+  tasks:
+    - name: Create splunk group
+      group: name=splunk
+
+    - name: Create splunk user
+      user: name=splunk group=splunk shell=/bin/bash home=/home/splunk
+
+    - name: Create /opt/splunk directory
+      file: path=/opt/splunk state=directory owner=splunk group=splunk
+
+    - name: Extract file into /opt/splunk
+      unarchive: 
+        src: splunk-6.6.2-4b804538c686-Linux-x86_64.tgz
+        dest: /opt
+        owner: splunk
+        group: splunk
+        creates: /opt/splunk/bin/splunk
+
+    - name: Start up Splunk
+      block: 
+        - name: Check if splunk is running
+          command: /opt/splunk/bin/splunk status --accept-license --answer-yes --no-prompt
+          register: splunk_status
+          ignore_errors: yes
+
+        - debug: msg={{splunk_status.stdout}}
+
+        - name: Start splunk if not running
+          command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt
+          when: "'splunkd is not running' in splunk_status.stdout"
+      become: yes
+      become_user: splunk
