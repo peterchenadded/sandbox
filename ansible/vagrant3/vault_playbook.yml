@@ -1,11 +1,12 @@
 ---
-- hosts: all
+- hosts: 127.0.0.1
+  connection: local
   vars_files:
     - api_key.yml
 
   tasks:
-    - name: Get hostname
-      command: hostname
+    #- name: Get hostname
+    #  command: hostname
     
     - debug: msg={{api_key}}
 
