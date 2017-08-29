@@ -16,7 +16,7 @@
 
     - name: Extract file into /opt/splunk
       unarchive: 
-        src: splunk-6.6.2-4b804538c686-Linux-x86_64.tgz
+        src: splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz
         dest: /opt
         owner: splunk
         group: splunk
