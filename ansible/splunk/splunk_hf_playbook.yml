@@ -1,0 +1,51 @@
+# vim: ts=2 expandtab
+
+---
+- hosts: 127.0.0.1
+  become: yes
+  connection: local
+  tasks:
+    - name: Download Splunk
+      get_url: 
+        url: https://www.splunk.com/page/download_track?file=6.5.3/linux/splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz&ac=&wget=true&name=wget&platform=Linux&architecture=x86_64&version=6.5.3&product=splunk&typed=release
+        dest: ./splunk.tar.gz
+
+    - name: Create splunk group
+      group: name=splunk
+
+    - name: Create splunk user
+      user: name=splunk group=splunk shell=/bin/bash home=/home/splunk
+
+    - name: Create /opt/splunk directory
+      file: path=/opt/splunk state=directory owner=splunk group=splunk
+
+    - name: Extract file into /opt/splunk
+      unarchive: 
+        src: splunk.tar.gz
+        dest: /opt
+        owner: splunk
+        group: splunk
+        creates: /opt/splunk/bin/splunk
+
+    - name: Copy deployment client
+      copy:
+        src: deploymentclient.conf
+        dest: /opt/splunk/etc/system/local
+        owner: splunk
+        group: splunk
+        mode: 0600
+
+    - name: Start up Splunk
+      block: 
+        - name: Check if splunk is running
+          command: /opt/splunk/bin/splunk status --accept-license --answer-yes --no-prompt
+          register: splunk_status
+          ignore_errors: yes
+
+        - debug: msg={{splunk_status.stdout}}
+
+        - name: Start splunk if not running
+          command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt
+          when: "'splunkd is not running' in splunk_status.stdout"
+      become: yes
+      become_user: splunk
