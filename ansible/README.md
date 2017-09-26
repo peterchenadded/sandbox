@@ -101,3 +101,35 @@ ansible-doc command
 ansible-doc debug
 ansible-doc shell
 ```
+
+# Inventory
+
+ansible_* are normally behaviour inventory variables
+
+```
+[web]
+mastery.example.name ansible_host=192.168.10.25
+
+[dns]
+backend.example.name
+
+[database]
+backend.example.name
+
+[frontend:children]
+web
+
+[backend:children]
+dns
+database
+
+[web:vars]
+http_port=88
+proxy_timeout=5
+
+[backend:vars]
+ansible_port=314
+
+[all:vars]
+ansible_ssh_user=otto
+```
