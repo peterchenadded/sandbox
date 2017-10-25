@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!--
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="myEval">
+				<expression>ERROR</expression>
+				<expression>message.contains("programming")</expression>
+			</evaluator>
+			<OnMismatch>ACCEPT</OnMismatch>
+			<OnMatch>DENY</OnMatch>
+		</filter>
+		-->
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%date [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</layout>
+	</appender>
+	<logger name="com.peter.testing" level="ERROR" />
+	<logger name="jmxbook.ch2" level="INFO" />
+	
+	<appender name="correlation-rollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="myEval">
+				<!--<expression>ERROR</expression>-->
+				<expression>message.contains("AppNBR")</expression>
+			</evaluator>
+			<OnMismatch>DENY</OnMismatch>
+			<OnMatch>ACCEPT</OnMatch>
+		</filter>
+		<prudent>true</prudent>	
+	   <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    	
+			 <fileNamePattern>C:/Users/PChen/Desktop/logs/correlation.%d{yyyy-MM-dd}.log</fileNamePattern>
+			 <maxHistory>10</maxHistory>
+	   </rollingPolicy>
+	   <layout class="ch.qos.logback.classic.PatternLayout">
+				   <Pattern>%date [%thread] %-5level %logger{36} - %.-2048msg%n</Pattern>
+	   </layout>
+ 	</appender>
+ 	<logger name="com.peter.testing.App" level="INFO" additivity="false">
+ 		<appender-ref ref="correlation-rollingFileAppender" />
+ 	</logger>
+	
+	<root level="ERROR">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
