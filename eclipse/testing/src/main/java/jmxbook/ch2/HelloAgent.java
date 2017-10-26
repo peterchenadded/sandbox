@@ -2,6 +2,8 @@ package jmxbook.ch2;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
+import javax.management.Notification;
+import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
 import org.slf4j.Logger;
@@ -9,7 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.jdmk.comm.HtmlAdaptorServer;
 
-public class HelloAgent {
+/**
+ * Run and opens a listener at http://localhost:9092
+ * @author PChen
+ *
+ */
+public class HelloAgent implements NotificationListener {
 	private MBeanServer mbs = null;
 
 	static final Logger LOG = LoggerFactory.getLogger(HelloAgent.class);
@@ -30,9 +37,17 @@ public class HelloAgent {
 			adapter.setPort(9092);
 			mbs.registerMBean(adapter, adapterName);
 			adapter.start();
+			
+			hw.addNotificationListener(this, null, null);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public void handleNotification(Notification notif, Object handback) {
+		LOG.info("Receiving notification...");
+		LOG.info(notif.getType());
+		LOG.info(notif.getMessage());
 	}
 	
 	public static void main(String args[]) {
