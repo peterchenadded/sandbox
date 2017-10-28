@@ -15,6 +15,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+<!--
+<repositories>
+    <repository>
+        <id>maven-repository</id>
+        <name>Public online mvn repository</name>
+        <url>http://central.maven.org/maven2/</url>
+    </repository>
+</repositories>
+-->
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -42,5 +51,6 @@
 			<artifactId>geocoder-java</artifactId>
 			<version>0.16</version>
 		</dependency>
+		
 	</dependencies>
 </project>

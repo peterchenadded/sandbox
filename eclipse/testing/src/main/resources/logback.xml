@@ -16,9 +16,11 @@
 			<Pattern>%date [%thread] %-5level %logger{36} - %msg%n</Pattern>
 		</layout>
 	</appender>
+	<!--
 	<logger name="com.peter.testing" level="ERROR" />
 	<logger name="jmxbook.ch2" level="INFO" />
-	
+	-->
+
 	<appender name="correlation-rollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
 			<evaluator name="myEval">
@@ -41,7 +43,7 @@
  		<appender-ref ref="correlation-rollingFileAppender" />
  	</logger>
 	
-	<root level="ERROR">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
