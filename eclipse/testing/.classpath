@@ -23,5 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="WEB-INF/lib/jmxtools.jar"/>
+	<classpathentry kind="lib" path="resources"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
