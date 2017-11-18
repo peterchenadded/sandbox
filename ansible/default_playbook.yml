@@ -1,0 +1,19 @@
+# vim: ts=2 expandtab
+# sudo apt-get install python-setuptools python-dev build-essential
+
+---
+- hosts: 127.0.0.1
+  become: yes
+  connection: local
+  tasks:
+    - name: Install vim
+      package:
+          name: vim
+
+    - name: Install Git
+      package:
+          name: git
+
+    - name: Install syslog-ng
+      package:
+          name: syslog-ng

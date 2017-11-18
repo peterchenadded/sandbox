@@ -10,3 +10,5 @@ hosts_args:
 	ansible-playbook -i $(inventory_file) playbook.yml --check
 	ansible-playbook -i $(inventory_file) playbook.yml --remote-user=johndoe
 
+run_default:
+	ansible-playbook default_playbook.yml -K
