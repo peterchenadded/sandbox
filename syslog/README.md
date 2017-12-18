@@ -47,3 +47,7 @@ log {
  };
 
 
+# Running as non-root
+
+# Change - /lib/systemd/system/syslog-ng.service
+ExecStart=/usr/sbin/syslog-ng -u splunk -g splunk --persist-file /opt/splunk/syslog-ng/syslog-ng.persist --pidfile /opt/splunk/syslog-ng/syslog-ng.pid -F
