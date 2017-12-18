@@ -16,7 +16,8 @@
 
     - name: Extract file into /opt/splunk
       unarchive: 
-        src: splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz
+        #src: splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz
+        src: splunk-7.0.1-2b5b15c4ee89-Linux-x86_64.tgz
         dest: /opt
         owner: splunk
         group: splunk
@@ -36,3 +37,12 @@
           when: "'splunkd is not running' in splunk_status.stdout"
       become: yes
       become_user: splunk
+
+    - name: Copy systemd service
+      copy: src=splunkd.service dest=/opt/splunk/splunkd.service owner=splunk group=splunk mode=644
+
+    - name: Create Symlink
+      file: src=/opt/splunk/splunkd.service dest=/etc/systemd/system/splunkd.service state=link
+
+    - name: Copy sudoers file
+      copy: src=splunk.sudoers dest=/etc/sudoers.d/splunk mode=440

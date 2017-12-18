@@ -1,0 +1,4 @@
+%splunk ALL= NOPASSWD: /bin/systemctl start splunkd
+%splunk ALL= NOPASSWD: /bin/systemctl stop splunkd
+%splunk ALL= NOPASSWD: /bin/systemctl status splunkd
+%splunk ALL= NOPASSWD: /bin/systemctl restart splunkd
