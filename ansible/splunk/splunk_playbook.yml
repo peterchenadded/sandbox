@@ -2,6 +2,10 @@
 
 ---
 - hosts: 127.0.0.1
+  vars: 
+    splunk_folder: splunk6.5.3
+    src_file: splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz
+    #src_file: splunk-7.0.1-2b5b15c4ee89-Linux-x86_64.tgz
   become: yes
   connection: local
   tasks:
@@ -11,38 +15,37 @@
     - name: Create splunk user
       user: name=splunk group=splunk shell=/bin/bash home=/home/splunk
 
-    - name: Create /opt/splunk directory
-      file: path=/opt/splunk state=directory owner=splunk group=splunk
+    - name: "Create /opt/{{splunk_folder}} directory"
+      file: path="/opt/{{splunk_folder}}" state=directory owner=splunk group=splunk
 
-    - name: Extract file into /opt/splunk
+    - name: "Extract file into /opt/{{splunk_folder}}/splunk"
       unarchive: 
-        #src: splunk-6.5.3-36937ad027d4-Linux-x86_64.tgz
-        src: splunk-7.0.1-2b5b15c4ee89-Linux-x86_64.tgz
-        dest: /opt
+        src: "{{src_file}}"
+        dest: "/opt/{{splunk_folder}}"
         owner: splunk
         group: splunk
-        creates: /opt/splunk/bin/splunk
+        creates: "/opt/{{splunk_folder}}/splunk/bin/splunk"
 
     - name: Start up Splunk
       block: 
         - name: Check if splunk is running
-          command: /opt/splunk/bin/splunk status --accept-license --answer-yes --no-prompt
+          command: "/opt/{{splunk_folder}}/splunk/bin/splunk status --accept-license --answer-yes --no-prompt"
           register: splunk_status
           ignore_errors: yes
 
         - debug: msg={{splunk_status.stdout}}
 
         - name: Start splunk if not running
-          command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt
+          command: "/opt/{{splunk_folder}}/splunk/bin/splunk start --accept-license --answer-yes --no-prompt"
           when: "'splunkd is not running' in splunk_status.stdout"
       become: yes
       become_user: splunk
 
-    - name: Copy systemd service
-      copy: src=splunkd.service dest=/opt/splunk/splunkd.service owner=splunk group=splunk mode=644
+    #- name: Copy systemd service
+    #  copy: src=splunkd.service dest=/opt/splunk/splunkd.service owner=splunk group=splunk mode=644
 
-    - name: Create Symlink
-      file: src=/opt/splunk/splunkd.service dest=/etc/systemd/system/splunkd.service state=link
+    #- name: Create Symlink
+    #  file: src=/opt/splunk/splunkd.service dest=/etc/systemd/system/splunkd.service state=link
 
-    - name: Copy sudoers file
-      copy: src=splunk.sudoers dest=/etc/sudoers.d/splunk mode=440
+    #- name: Copy sudoers file
+    #  copy: src=splunk.sudoers dest=/etc/sudoers.d/splunk mode=440
