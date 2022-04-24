@@ -68,3 +68,14 @@ print(time.time()-s)
 
 http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
 
+# plotting
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+g = np.ones((10,10), np.int8)
+g[1][0] = 100
+plt.matshow(g)
+
+```
