@@ -24,6 +24,8 @@
     use node debugger file.js to debug
     next, cont, step, out, watch(expression)
 
+    export DEBUG=*
+
 ## Express
     npm init
     npm install express@4.1.2 --save
